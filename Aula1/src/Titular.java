@@ -1,10 +1,16 @@
 
 public class Titular {
-	String cpf;
-	String rg;
-	Endereco endereco;
+	private String cpf;
+	private String rg;
+	private Endereco endereco;
 	
-	void gerarCPF() {
+	Titular(Endereco endereco) {
+		this.gerarCPF();
+		this.gerarRG();
+		this.endereco = endereco;
+	}
+	
+	private void gerarCPF() {
 		String cpfProvisorio = "";
 		for (int i = 0; i < 14; i++) {
 			if (i % 4 == 3) {
@@ -23,7 +29,7 @@ public class Titular {
 		cpf = cpfProvisorio;
 	}
 	
-	void gerarRG() {
+	private void gerarRG() {
 		String rgProvisorio = "";
 		for (int i = 0; i < 9; i++) {
 			if (i % 4 == 1) {
@@ -35,5 +41,11 @@ public class Titular {
 		}
 		
 		rg = rgProvisorio;
+	}
+	
+	public void imprimirTitular() {
+		System.out.println("RG: " + this.rg);
+		System.out.println("CPF: " + this.cpf);
+		this.endereco.imprimeEndereco();
 	}
 }

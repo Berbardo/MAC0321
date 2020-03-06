@@ -25,7 +25,7 @@ public class Exemplo {
 		System.out.println("");
 	}
 	
-	private void imprimeSecreto() {
+	void imprimeSecreto() {
 		System.out.println("Mensagem secreta: " + secreto);
 		System.out.println("");
 	}

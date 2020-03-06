@@ -1,47 +1,44 @@
 
 public class ContaCorrente {
-	Titular titular;
+	private Titular[] titulares;
+	
+	ContaCorrente(Titular[] titular) {
+		this.titulares = titular;
+	}
+	
+	ContaCorrente(Titular titular) {
+		Titular[] titular_placeholder = {titular};
+		this.titulares = titular_placeholder;
+	}
 	
 	public static void main(String args[]) {
 		Endereco casaDeCasal = new Endereco(); 
-		Endereco apartamento = new Endereco(); 
+		Endereco apartamentoSolteiro = new Endereco();
 		
-		casaDeCasal.gerarEndereco();
-		apartamento.gerarEndereco();
+		Titular fulana = new Titular(casaDeCasal);
+		Titular ciclana = new Titular(apartamentoSolteiro);
+		Titular beltrana = new Titular(casaDeCasal);
 		
-		Titular fulana = new Titular();
-		Titular ciclana = new Titular();
-		Titular beltrana = new Titular();
+		Titular[] casal_titular = {fulana, beltrana};
 		
-		fulana.gerarCPF();
-		fulana.gerarRG();
-		ciclana.gerarCPF();
-		ciclana.gerarRG();
-		beltrana.gerarCPF();
-		beltrana.gerarRG();
+		ContaCorrente conta_conjunta = new ContaCorrente(casal_titular);
+		ContaCorrente conta_única1 = new ContaCorrente(fulana);
+		ContaCorrente conta_única2 = new ContaCorrente(ciclana);
 		
-		fulana.endereco = casaDeCasal;
-		beltrana.endereco = casaDeCasal;
-		ciclana.endereco = apartamento;		
-		
-		ContaCorrente conta1 = new ContaCorrente();
-		ContaCorrente conta2 = new ContaCorrente();
-		ContaCorrente conta3 = new ContaCorrente();
-		
-		conta1.titular = fulana;
-		conta2.titular = ciclana;
-		conta3.titular = beltrana;
-		
-		conta1.imprimirConta();
-		conta2.imprimirConta();
-		conta3.imprimirConta();
+		conta_conjunta.imprimirConta();
+		conta_única1.imprimirConta();
+		conta_única2.imprimirConta();
 	}
 	
-	void imprimirConta() {
+	public void imprimirConta() {
 		System.out.println("Conta:");
-		System.out.println("RG: " + titular.rg);
-		System.out.println("CPF: " + titular.cpf);
-		titular.endereco.imprimeEndereco();
+		int i = 1;
+		for (Titular titular: titulares) {
+			System.out.println("Titular " + i + ": ");
+			i++;
+			titular.imprimirTitular();
+		}
+
 		System.out.println(" ");
 	}
 }

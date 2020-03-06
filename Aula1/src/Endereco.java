@@ -1,22 +1,30 @@
 
 public class Endereco {
-	String rua = "";
-	String numero = "";
-	String cidade = "";
-	String uf = "";
+	private String logradouro = "";
+	private String numero = "";
+	private String cidade = "";
+	private String uf = "";
 	
-	void gerarEndereco() {
-		if ((int) (Math.random() * 2) == 1) {
-			rua = "Rua ";
+	Endereco() {
+		this.gerarEndereco();
+	}
+	
+	private void gerarEndereco() {
+		int tipo_logradouro = (int) (Math.random() * 3);
+		if (tipo_logradouro == 2) {
+			logradouro = "Rua ";
+		}
+		else if (tipo_logradouro == 1){
+			logradouro = "Avenida ";
 		}
 		else {
-			rua = "Avenida ";
+			logradouro = "Alameda ";
 		}
 		
-		rua += (char) (Math.random() * 100 % 26 + 'A');
+		logradouro += (char) (Math.random() * 100 % 26 + 'A');
 		
 		for (int i = 0; i < Math.random() * 100 % 8; i++) {
-			rua += (char) (Math.random() * 100 % 26 + 'a');			
+			logradouro += (char) (Math.random() * 100 % 26 + 'a');			
 		}
 		
 		numero += (int) (Math.random() * 10000 % 10000);
@@ -31,7 +39,7 @@ public class Endereco {
 		uf += (char) (Math.random() * 100 % 26 + 'A');
 	}
 	
-	void imprimeEndereco() {
-		System.out.println(rua + " " + numero + ", " + cidade + " - " + uf);
+	public void imprimeEndereco() {
+		System.out.println(logradouro + " " + numero + ", " + cidade + " - " + uf);
 	}
 }

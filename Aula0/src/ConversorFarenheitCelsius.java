@@ -4,9 +4,11 @@ public class ConversorFarenheitCelsius {
 		System.out.println("Conversão iniciada!");
 		ConversorFarenheitCelsius conversor = new ConversorFarenheitCelsius();
 		if (args[1].equals("Celsius")) {
+			@SuppressWarnings("unused")
 			float FtoC = conversor.conversaoFarenheitCelsius(Float.valueOf(args[0]));
 		}
 		else {
+			@SuppressWarnings("unused")
 			float CtoF = conversor.conversaoCelsiusFarenheit(Float.valueOf(args[0]));
 		}
 	}
