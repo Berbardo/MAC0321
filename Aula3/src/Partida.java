@@ -17,14 +17,49 @@ public class Partida {
 			System.out.println("Partida já foi jogada");
 			return;
 		}
-		golsMandante = (int) (Math.random() * 10);
-		golsVisitante = (int) (Math.random() * 10);
+		
+		double poderTimeMandante = 1.1;	
+		double poderTimeVisitante = 0.9;
+		
+		if (timeMandante.jogosDisputados != 0) {
+			poderTimeMandante *= timeMandante.golsPro/timeMandante.jogosDisputados;
+		}
+		
+		if (timeVisitante.jogosDisputados != 0) {
+			poderTimeVisitante *= timeVisitante.golsPro/timeVisitante.jogosDisputados;
+		}
+		
+		golsMandante = (int) (Math.random() * 4.5 * poderTimeMandante);
+		golsVisitante = (int) (Math.random() * 4.5 * poderTimeVisitante);
+		
+		terminado = true;
+	}
+	
+	void jogarPartida(int golsMandante, int golsVisitante) {
+		if (terminado) {
+			System.out.println("Partida já foi jogada");
+			return;
+		}
+		this.golsMandante = golsMandante;
+		this.golsVisitante = golsVisitante;
 		
 		terminado = true;
 	}
 	
 	void atualizarTimes() {
-		timeMandante.contabilizarPartida(golsMandante, golsVisitante);
-		timeVisitante.contabilizarPartida(golsVisitante, golsMandante);
+		if (terminado) {
+			timeMandante.contabilizarPartida(golsMandante, golsVisitante);
+			timeVisitante.contabilizarPartida(golsVisitante, golsMandante);	
+		}
+	}
+	
+	// Metodos para Teste
+	
+	int recebeGolsMandante() {
+		return golsMandante;
+	}
+	
+	int recebeGolsVisitante() {
+		return golsVisitante;
 	}
 }

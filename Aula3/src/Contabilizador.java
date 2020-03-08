@@ -8,10 +8,10 @@ public class Contabilizador {
 		}
 	}
 	
-	static void obterClassificacao(Time[] times) {
+	static void obterClassificacao(Calendario calendario) {
 		Time timeVencedor;
-		Time[] classificacao = times.clone();
-		for (int quantidadeDeTimes = times.length; quantidadeDeTimes > 0; quantidadeDeTimes--) {
+		Time[] classificacao = calendario.times.clone();
+		for (int quantidadeDeTimes = calendario.times.length; quantidadeDeTimes > 0; quantidadeDeTimes--) {
 			timeVencedor = obterVencedor(classificacao);
 			for (int indice = 0; indice < classificacao.length; indice++) {
 				if (classificacao[indice] == timeVencedor) {
@@ -21,7 +21,7 @@ public class Contabilizador {
 		}
 	}
 	
-	static private Time obterVencedor(Time[] times) {
+	private static Time obterVencedor(Time[] times) {
 		Time timeVencedor = times[0];
 		for (Time time: times) {
 			if (time.pontosGanhos > timeVencedor.pontosGanhos) {
@@ -40,7 +40,7 @@ public class Contabilizador {
 		return timeVencedor;
 	}
 	
-    static private Time[] removerTime(Time[] times, int indice){
+    private static Time[] removerTime(Time[] times, int indice){
     	Time[] timeFinal = new Time[times.length - 1];
         int timesSobrando = times.length - (indice + 1);
         System.arraycopy(times, 0, timeFinal, 0, indice);

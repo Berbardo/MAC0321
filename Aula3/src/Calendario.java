@@ -1,10 +1,29 @@
 // Bernardo Rocha Coutinho - 11288235
 
 public class Calendario {
+	Time[] times;
 	Partida[] partidas;
-	int partidasJogadas = 0;
 		
-	Calendario(Time[] times) {
+	Calendario(int numeroDeTimes) {
+		this.criarTimes(numeroDeTimes);
+		this.criarPartidas();
+	}
+	
+	void jogarCalendario() {
+		for(Partida partida: partidas) {
+			partida.jogarPartida();
+		}
+	}
+	
+	private void criarTimes(int numeroDeTimes) {	
+		times = new Time[numeroDeTimes];
+		for (int i = 0; i < numeroDeTimes; i++) {
+			times[i] = new Time();
+			times[i].gerarNome();
+		}
+	}
+	
+	private void criarPartidas() {	
 		int numeroDePartidas = times.length * (times.length - 1);
 		partidas = new Partida[numeroDePartidas];
 		int numeroPartida = 0;
@@ -18,28 +37,11 @@ public class Calendario {
 		}
 	}
 	
-	private void jogarCalendario() {
-		for(Partida partida: partidas) {
-			partida.jogarPartida();
-		}
-	}
-	
+	// Simulacao Brasileirao
 	public static void main(String args[]) {
-		Time[] times = criarTimes(10);
-		Calendario calendario = new Calendario(times);
+		Calendario calendario = new Calendario(20);
 		calendario.jogarCalendario();
 		Contabilizador.contabilizarEstatisticas(calendario);
-		Contabilizador.obterClassificacao(times);
+		Contabilizador.obterClassificacao(calendario);
 	}
-	
-	static private Time[] criarTimes(int numeroDeTimes) {	
-		Time[] times = new Time[numeroDeTimes];
-		for (int i = 0; i < numeroDeTimes; i++) {
-			times[i] = new Time();
-			times[i].gerarNome();
-		}
-		
-		return times;
-	}
-
 }
