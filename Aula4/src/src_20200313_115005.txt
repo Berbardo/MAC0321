@@ -1,0 +1,4 @@
+WARNING - 11:50:05: First conversion pass
+WARNING - 11:50:06: Second pass : generating package usages
+WARNING - 11:50:06: Saving uml file /resource/Aula4/src/src.uml
+WARNING - 11:50:06: Uml file /resource/Aula4/src/src.uml saved
