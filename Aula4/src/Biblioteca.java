@@ -13,7 +13,7 @@ public class Biblioteca {
 
 		MusicaCD prelude = new MusicaCD("Prelude", "Final Fantasy VII Original Soundtrack", "Nobuo Uematsu", "Nobuo Uematsu", 1997);
 		MusicaCD resposta = new MusicaCD("Resposta", "Siderado", "Skank", "Nando Reis", 1998);
-		MusicaCD epitafio = new MusicaCD("Epitáfio", "A Melhor Banda de Todos os Tempos da Última Semana", "Titãs", "Titãs", 2002);
+		MusicaCD epitafio = new MusicaCD("Epitafio", "A Melhor Banda de Todos os Tempos da Ultima Semana", "Titas", "Titas", 2002);
 
 		
 		MusicaMP3 dare = new MusicaMP3("DARE", "Demon Days", "Gorillaz", "Gorillaz", 2005, 4582277);

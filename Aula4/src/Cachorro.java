@@ -11,15 +11,15 @@ public class Cachorro extends AnimalVertebrado{
 	}
 	
 	public static void main(String args[]) {
-		Animal totó = new Cachorro();
+		Animal toto = new Cachorro();
 		Cachorro rex = new Cachorro(12000);
 				
-//		totó.lata();
+//		toto.lata();
 		rex.lata();
 		
-		Cachorro totó_catioro = (Cachorro) totó;
+		Cachorro toto_catioro = (Cachorro) toto;
 		
-		totó_catioro.lata();
+		toto_catioro.lata();
 	}
 	
 	void lata() {
