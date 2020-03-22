@@ -1,0 +1,5 @@
+Algoritmo,Tempo Lista de Tamanho 1e1,Tempo Lista de Tamanho 1e2,Tempo Lista de Tamanho 1e3,Tempo Lista de Tamanho 1e4,Tempo Lista de Tamanho 1e5,Tempo Lista de Tamanho 1e6
+Quick Sort,0.0025,0.0075,0.0875,1.1877,21.1637,1439.1893,
+Heap Sort,0.0071,0.0896,1.4456,5.3018,39.0254,673.907,
+Insertion Sort,0.0019,0.0641,5.83,143.6404,10784.0685,4742020.7074,
+Bubble Sort,0.0024,0.1637,3.9899,477.8613,54852.7381,1.08399658297E7,

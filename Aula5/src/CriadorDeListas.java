@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 public class CriadorDeListas {
 	
-	public static <T> ArrayList<T> criaListaAleatoria(Supplier<T> funcao, int tamanho) {
+	public static <T extends Comparable<T>> ArrayList<T> criaListaAleatoria(Supplier<T> funcao, int tamanho) {
 		ArrayList<T> array = new ArrayList<>();
 				
 		for (int i = 0; i < tamanho; i++) {
@@ -16,7 +16,7 @@ public class CriadorDeListas {
 		return array;
 	}
 	
-	public static <T> ArrayList<T> criaListaReversa(Supplier<T> funcao, int tamanho) {
+	public static <T extends Comparable<T>> ArrayList<T> criaListaReversa(Supplier<T> funcao, int tamanho) {
 		ArrayList<T> array = criaListaAleatoria(funcao, tamanho);
 		
 		Comparator<T> c = Collections.reverseOrder();
@@ -25,11 +25,10 @@ public class CriadorDeListas {
 		return array;
 	}
 	
-	public static <T> ArrayList<T> criaListaSemiOrdenada(Supplier<T> funcao, int tamanho) {
+	public static <T extends Comparable<T>> ArrayList<T> criaListaSemiOrdenada(Supplier<T> funcao, int tamanho) {
 		ArrayList<T> array = criaListaAleatoria(funcao, tamanho);
 		
-		Comparator<T> c = Collections.reverseOrder();
-		Collections.sort(array, c);
+		array = QuickSort.quickSort(array, array.size()/5, array.size() - 1);
 		
 		return array;
 	}

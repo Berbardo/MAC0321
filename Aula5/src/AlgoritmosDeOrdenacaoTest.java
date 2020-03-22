@@ -31,12 +31,51 @@ class AlgoritmosDeOrdenacaoTest {
     }
 
 	@Test
-	void mergeSortTest() {
-		MergeSort mergeSort = new MergeSort();
+	void bubbleSortTest() {
+		BubbleSort bubbleSort = new BubbleSort();
 		
-		listaInts = mergeSort.ordena(listaInts);
-		listaFloats = mergeSort.ordena(listaFloats);
-		listaDoubles = mergeSort.ordena(listaDoubles);
+		listaInts = bubbleSort.ordena(listaInts);
+		listaFloats = bubbleSort.ordena(listaFloats);
+		listaDoubles = bubbleSort.ordena(listaDoubles);
+		
+		assertEquals(listaInts, gabaritoInts);
+		assertEquals(listaFloats, gabaritoFloats);
+		assertEquals(listaDoubles, gabaritoDoubles);
+	}
+
+	@Test
+	void heapSortTest() {
+		HeapSort heapSort = new HeapSort();
+		
+		listaInts = heapSort.ordena(listaInts);
+		listaFloats = heapSort.ordena(listaFloats);
+		listaDoubles = heapSort.ordena(listaDoubles);
+		
+		assertEquals(listaInts, gabaritoInts);
+		assertEquals(listaFloats, gabaritoFloats);
+		assertEquals(listaDoubles, gabaritoDoubles);
+	}
+	
+	@Test
+	void selectionSortTest() {
+		InsertionSort insertionSort = new InsertionSort();
+		
+		listaInts = insertionSort.ordena(listaInts);
+		listaFloats = insertionSort.ordena(listaFloats);
+		listaDoubles = insertionSort.ordena(listaDoubles);
+		
+		assertEquals(listaInts, gabaritoInts);
+		assertEquals(listaFloats, gabaritoFloats);
+		assertEquals(listaDoubles, gabaritoDoubles);
+	}
+	
+	@Test
+	void quickSortTest() {
+		QuickSort quickSort = new QuickSort();
+		
+		listaInts = quickSort.ordena(listaInts);
+		listaFloats = quickSort.ordena(listaFloats);
+		listaDoubles = quickSort.ordena(listaDoubles);
 		
 		assertEquals(listaInts, gabaritoInts);
 		assertEquals(listaFloats, gabaritoFloats);
