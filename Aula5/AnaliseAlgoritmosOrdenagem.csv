@@ -1,5 +1,5 @@
 Algoritmo,Tempo Lista Aleatoria,Tempo Lista Quase Ordenada,Tempo Lista Revertida
-Quick Sort,0.379,10.2274,2.4546,
-Heap Sort,24.5365,1.7851,1.1577,
-Insertion Sort,13.2098,3.976,15.3043,
-Bubble Sort,28.3577,3.4042,3.1176,
+Quick Sort,0.10994,2.44719,1.68011,
+Heap Sort,0.63783,0.55403,0.51209,
+Insertion Sort,2.13661,0.54171,3.97413,
+Bubble Sort,6.107380000000001,2.3800199999999996,3.03186,

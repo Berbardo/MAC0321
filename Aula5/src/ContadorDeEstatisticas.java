@@ -15,13 +15,23 @@ public class ContadorDeEstatisticas {
 	private static void avaliarTemposOrdenagem(AlgoritmoDeOrdenacao algoritmo) {
 		ArrayList<Double> temposAlgoritmo = new ArrayList<>();
 		
-		ArrayList<Integer> listaAleatoria = CriadorDeListas.criaListaAleatoria(() -> (int) (Math.random() * 1000), 1000);
-		ArrayList<Integer> listaSemiOrdenada = CriadorDeListas.criaListaSemiOrdenada(() -> (int) (Math.random() * 1000), 1000);
-		ArrayList<Integer> listaReversa = CriadorDeListas.criaListaReversa(() -> (int) (Math.random() * 1000), 1000);
+		double tempoAleatoria = 0;
+		double tempoSemiOrdenada = 0;
+		double tempoReversa = 0;
 		
-		temposAlgoritmo.add(calculaDuracao(algoritmo, listaAleatoria));
-		temposAlgoritmo.add(calculaDuracao(algoritmo, listaSemiOrdenada));
-		temposAlgoritmo.add(calculaDuracao(algoritmo, listaReversa));
+		for (int i = 0; i < 10; i++) {
+			ArrayList<Integer> listaAleatoria = CriadorDeListas.criaListaAleatoria(() -> (int) (Math.random() * 1000), 1000);
+			ArrayList<Integer> listaSemiOrdenada = CriadorDeListas.criaListaSemiOrdenada(() -> (int) (Math.random() * 1000), 1000);
+			ArrayList<Integer> listaReversa = CriadorDeListas.criaListaReversa(() -> (int) (Math.random() * 1000), 1000);
+		
+			tempoAleatoria += calculaDuracao(algoritmo, listaAleatoria)/10;
+			tempoSemiOrdenada += calculaDuracao(algoritmo, listaSemiOrdenada)/10;
+			tempoReversa += calculaDuracao(algoritmo, listaReversa)/10;
+		}
+		
+		temposAlgoritmo.add(tempoAleatoria);
+		temposAlgoritmo.add(tempoSemiOrdenada);
+		temposAlgoritmo.add(tempoReversa);
 		
 		temposOrdenagem.add(temposAlgoritmo);
 	}
@@ -40,13 +50,23 @@ public class ContadorDeEstatisticas {
 	private static void avaliarTemposTipo(AlgoritmoDeOrdenacao algoritmo) {
 		ArrayList<Double> temposAlgoritmo = new ArrayList<>();
 		
-		ArrayList<Integer> listaInts = CriadorDeListas.criaListaAleatoria(() -> (int) (Math.random() * 1000), 1000);
-		ArrayList<Float> listaFloats = CriadorDeListas.criaListaAleatoria(() -> (float) (Math.random() * 1000), 1000);
-		ArrayList<Double> listaDoubles = CriadorDeListas.criaListaAleatoria(() -> (double) (Math.random() * 1000), 1000);
+		double tempoInts = 0;
+		double tempoFloats = 0;
+		double tempoDoubles = 0;
 		
-		temposAlgoritmo.add(calculaDuracao(algoritmo, listaInts));
-		temposAlgoritmo.add(calculaDuracao(algoritmo, listaFloats));
-		temposAlgoritmo.add(calculaDuracao(algoritmo, listaDoubles));
+		for (int i = 0; i < 10; i++) {
+			ArrayList<Integer> listaInts = CriadorDeListas.criaListaAleatoria(() -> (int) (Math.random() * 1000), 1000);
+			ArrayList<Float> listaFloats = CriadorDeListas.criaListaAleatoria(() -> (float) (Math.random() * 1000), 1000);
+			ArrayList<Double> listaDoubles = CriadorDeListas.criaListaAleatoria(() -> (double) (Math.random() * 1000), 1000);
+			
+			tempoInts += calculaDuracao(algoritmo, listaInts)/10;
+			tempoFloats += calculaDuracao(algoritmo, listaFloats)/10;
+			tempoDoubles += calculaDuracao(algoritmo, listaDoubles)/10;
+		}
+		
+		temposAlgoritmo.add(tempoInts);
+		temposAlgoritmo.add(tempoFloats);
+		temposAlgoritmo.add(tempoDoubles);
 		
 		temposTipo.add(temposAlgoritmo);
 	}
