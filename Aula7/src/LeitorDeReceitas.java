@@ -1,9 +1,10 @@
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LeitorDeReceitas extends LeitorDeArquivos {
 
-	static ArrayList<String[]> lerReceita(String caminhoDoArquivo, ArrayList<String[]> ingredientes) {
+	static ArrayList<String[]> lerReceita(String caminhoDoArquivo, ArrayList<String[]> listaDeIngredientes) {
 		char[] arquivo = new char[1024];
 		ArrayList<String[]> quantidadeDosIngredientes = new ArrayList<>();
 		int indice;
@@ -15,11 +16,25 @@ public class LeitorDeReceitas extends LeitorDeArquivos {
 			
 			String receita = new String(arquivo);
 			
-			for (String[] ingrediente: ingredientes) {
+			// Procura cada ingrediente na receita
+			for (String[] ingrediente: listaDeIngredientes) {
 				indice = receita.indexOf(ingrediente[0]);
+				
+				// Procura a quantidade do ingrediente, caso ele esteja na receita
 				if (indice != -1) {
-					indice = receita.indexOf('-', indice);
-					quantidade = receita.substring(indice + 1, receita.indexOf('\n', indice)).trim();
+					Scanner procuraQuantidade = new Scanner(receita.substring(indice));
+					procuraQuantidade.skip("[^0-9]*");
+					
+					try {
+						quantidade = Integer.toString(procuraQuantidade.nextInt());  						
+					} catch(Exception e) {
+						procuraQuantidade.close();
+						System.out.println("Nao foi encontrada uma quantidade do ingrediente " + ingrediente[0]);
+						throw e;
+					}
+					
+					
+					procuraQuantidade.close();
 					
 					String[] quantIngrediente = {ingrediente[0], quantidade};
 					quantidadeDosIngredientes.add(quantIngrediente);
