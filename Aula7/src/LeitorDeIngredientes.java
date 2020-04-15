@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class LeitorDeIngredientes extends LeitorDeArquivos{
 
-	static ArrayList<String[]> lerListaDeIngredientes(String caminhoDoArquivo) {
-		char[] arquivo = new char[1024];
+	static ArrayList<String[]> lerListaDeIngredientes(String caminhoDoArquivo) throws Exception {
+		char[] arquivo = new char[8192];
 		ArrayList<Character> listaDeIngredientes = new ArrayList<>();
 		ArrayList<String[]> ingredientes = new ArrayList<>();
 		
@@ -23,7 +23,11 @@ public class LeitorDeIngredientes extends LeitorDeArquivos{
 			
 			leitor.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			if (!caminhoDoArquivo.endsWith(".txt")) {
+				String format = caminhoDoArquivo.substring(caminhoDoArquivo.lastIndexOf('.'));
+				throw new WrongFileFormatException("Formato de arquivo incorreto! Deveria ser '.txt', porém recebeu " + format);
+			}
+			throw e;
 		}
 		
 		return ingredientes;

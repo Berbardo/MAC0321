@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class LeitorDeReceitas extends LeitorDeArquivos {
 
-	static ArrayList<String[]> lerReceita(String caminhoDoArquivo, ArrayList<String[]> listaDeIngredientes) {
-		char[] arquivo = new char[1024];
+	static ArrayList<String[]> lerReceita(String caminhoDoArquivo, ArrayList<String[]> listaDeIngredientes) throws Exception {
+		char[] arquivo = new char[8192];
 		ArrayList<String[]> quantidadeDosIngredientes = new ArrayList<>();
 		int indice;
 		String quantidade;
@@ -15,6 +15,9 @@ public class LeitorDeReceitas extends LeitorDeArquivos {
 			leitor.read(arquivo);
 			
 			String receita = new String(arquivo);
+			
+			// Procura algum ingrediente desconhecido na receita
+			procuraIngredienteDesconhecido(receita, listaDeIngredientes);
 			
 			// Procura cada ingrediente na receita
 			for (String[] ingrediente: listaDeIngredientes) {
@@ -29,10 +32,8 @@ public class LeitorDeReceitas extends LeitorDeArquivos {
 						quantidade = Integer.toString(procuraQuantidade.nextInt());  						
 					} catch(Exception e) {
 						procuraQuantidade.close();
-						System.out.println("Nao foi encontrada uma quantidade do ingrediente " + ingrediente[0]);
-						throw e;
+						throw new IngredientQuantityNotFoundException("Nao foi encontrada uma quantidade do ingrediente " + ingrediente[0]);
 					}
-					
 					
 					procuraQuantidade.close();
 					
@@ -42,10 +43,40 @@ public class LeitorDeReceitas extends LeitorDeArquivos {
 			}
 						
 			leitor.close();
-		} catch (Exception e) {
+		} catch (IngredientNotFoundException e) {
+			System.out.println("Um ingrediente da lista nao foi encontrado!");
 			System.out.println(e);
+			return null;
+		} catch (Exception e) {
+			if (!caminhoDoArquivo.endsWith(".txt")) {
+				String format = caminhoDoArquivo.substring(caminhoDoArquivo.indexOf('.'));
+				throw new WrongFileFormatException("Formato de arquivo incorreto! Deveria ser '.txt', porém recebeu " + format);
+			}
+			throw e;
 		}
 		
 		return quantidadeDosIngredientes;
+	}
+	
+	static public void procuraIngredienteDesconhecido(String receita, ArrayList<String[]> listaDeIngredientes) throws IngredientNotFoundException {
+		String[] linhas = receita.split("\\r?\\n");
+		for(String linha: linhas) {
+			if (!linha.contains("-")) {
+				continue;
+			}
+			
+			String ingrediente = linha.substring(0, linha.indexOf('-')).trim();
+			
+			boolean encontrado = false;
+			for (String[] ingredienteDaLista: listaDeIngredientes) {
+				if (ingrediente.contentEquals(ingredienteDaLista[0])) {
+					encontrado = true;
+					break;
+				}
+			}
+			if (!encontrado) {				
+				throw new IngredientNotFoundException("O ingrediente " + ingrediente + " nao foi encontrado na lista de ingredientes");
+			}
+		}
 	}
 }

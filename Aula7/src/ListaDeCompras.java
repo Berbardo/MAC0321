@@ -6,24 +6,49 @@ public class ListaDeCompras {
 	
 	
 	public static void main(String[] args) {
+		String caminhoDaListaDeIngredientes = "./receitas/ingredientes.txt";
+		
 		ListaDeCompras listaDeCompras = new ListaDeCompras();
 		
-		ArrayList<String[]> listaDeIngredientes = LeitorDeIngredientes.lerListaDeIngredientes(args[0]);
+		ArrayList<String[]> listaDeIngredientes;
+		try {
+			listaDeIngredientes = LeitorDeIngredientes.lerListaDeIngredientes(caminhoDaListaDeIngredientes);
+		} catch (Exception e) {
+			System.out.println("Nao foi possivel importar a lista de ingredientes!");
+			System.out.println("Erro:");
+			System.out.println(e);
+			return;
+		}
 		
 		listaDeCompras.criaListaDeCompras(listaDeIngredientes);
 		
+		CriadorDePDF criadorDePDF = new CriadorDePDF();
+		criadorDePDF.criaPDF();	
+		
 		for (String receita: args) {
-			if (receita == args[0])
+			ArrayList<String[]> quantIngredientes;
+			
+			try {
+				quantIngredientes = LeitorDeReceitas.lerReceita(receita, listaDeIngredientes);
+			} catch (Exception e) {
+				System.out.println("Nao foi possivel ler a receita " + receita);
+				System.out.println("Erro:");
+				System.out.println(e);
 				continue;
-			ArrayList<String[]> quantIngredientes = LeitorDeReceitas.lerReceita(receita, listaDeIngredientes);
+			}
 			
 			for (String[] quantIngrediente: quantIngredientes) {
 				listaDeCompras.adicionaIngrediente(quantIngrediente);				
 			}
+			
+			// Adiciona a receita ao PDF
+			criadorDePDF.adicionaReceitaPDF(receita);
 		}
 		
+		criadorDePDF.terminaPDF();
+		
 		listaDeCompras.adicionaUnidades(listaDeIngredientes);
-		listaDeCompras.exportaListaDeCompras();
+		listaDeCompras.exportaListaDeCompras("receitas/ListaDeCompras.txt");
 	}
 	
 	void criaListaDeCompras(ArrayList<String[]> listaDeIngredientes) {
@@ -53,7 +78,7 @@ public class ListaDeCompras {
 		
 	}
 	
-	void exportaListaDeCompras() {
+	void exportaListaDeCompras(String caminho) {
 		String listaDeCompras = new String();
 		listaDeCompras += "Lista De Compra: \n\n";
 		for (String[] ingrediente: this.listaDeCompras) {
@@ -61,7 +86,7 @@ public class ListaDeCompras {
 		}
 		
 		try {
-			PrintWriter arquivo = new PrintWriter("ListaDeCompras.txt");
+			PrintWriter arquivo = new PrintWriter(caminho);
 			arquivo.println(listaDeCompras);
 			arquivo.close();
 		} catch(Exception e) {
