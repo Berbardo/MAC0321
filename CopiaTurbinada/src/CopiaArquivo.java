@@ -37,4 +37,9 @@ public class CopiaArquivo implements EstrategiaCopia {
 		return copia;
 	}
 
+	@Override
+	public String recebeOrigem() {
+		return this.origem;
+	}
+
 }
