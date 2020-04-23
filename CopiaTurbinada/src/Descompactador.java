@@ -1,18 +1,16 @@
-import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class Descompactador extends CopiaDecorador{
-	private final String extensao = ".zip";
+public class Descompactador extends CopiaDecorador {
+	private InputStream input = null;
 	
 	public Descompactador(EstrategiaCopia estrategiaCopia) {
 		super(estrategiaCopia);
+		this.input = super.recebeInput();
 	}
 
 	@Override
@@ -22,37 +20,47 @@ public class Descompactador extends CopiaDecorador{
 	}
 	
 	private void descompacta() {
+		byte[] bytes = null;
+		
 		try {		
 			ZipInputStream input = null;
 			
 			try {
-				input = new ZipInputStream(new FileInputStream(super.origem + this.extensao));
+				input = new ZipInputStream(this.input);
 				
-				ZipEntry zipEntry = input.getNextEntry();
+				ZipEntry zipEntry;
 				byte[] buffer = new byte[1024];
 				
-				while (zipEntry != null) {
-					FileOutputStream output = new FileOutputStream(zipEntry.getName());
+				while ((zipEntry = input.getNextEntry()) != null) {
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		            int len;
 		            while ((len = input.read(buffer)) > 0) {
-		            	output.write(buffer, 0, len);
+		            	baos.write(buffer, 0, len);
 		            }
-		            output.close();
-		            zipEntry = input.getNextEntry();
+		            bytes = baos.toByteArray();
+		            baos.close();
 				}
 				input.closeEntry();
 			} finally {
 				if (input != null) {
 					input.close();
-				}
+				}	
 			}
 		} catch(IOException e) {
 			System.out.println("Erro na descompactacao");
 		}
+		
+		super.defineInput(new ByteArrayInputStream(bytes));
 	}
 
 	@Override
-	public String recebeOrigem() {
-		return this.origem;
+	public InputStream recebeInput() {
+		return this.input;
 	}
+
+	@Override
+	public void defineInput(InputStream input) {
+		this.input = input;		
+	}
+
 }

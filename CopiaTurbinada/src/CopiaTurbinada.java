@@ -1,3 +1,5 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class CopiaTurbinada {
 	public static void main(String[] args) {
@@ -12,7 +14,7 @@ public class CopiaTurbinada {
 	}
 	
 	private static EstrategiaCopia defineOrigem(String[] args) {
-		EstrategiaCopia estrategiaCopia;
+		EstrategiaCopia estrategiaCopia = null;
 		String parametros = "";
 		
 		for (String parametro: args) {
@@ -25,23 +27,24 @@ public class CopiaTurbinada {
 			parametros += " " + parametro;
 		}
 		
-		estrategiaCopia = retornaEstrategiaCopia(parametros);
+		try {
+			estrategiaCopia = retornaEstrategiaCopia(parametros);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return estrategiaCopia;
 	}
 
-	private static EstrategiaCopia retornaEstrategiaCopia(String parametros) {
+	private static EstrategiaCopia retornaEstrategiaCopia(String parametros) throws FileNotFoundException {
 		if (parametros.contains("-arquivo")) {
 			parametros.replace("-arquivo ", "");
 			
 			String[] args = parametros.split(" ");
 			String origem = args[args.length -1];
-			try {
-				origem = origem.substring(0, origem.indexOf('.'));				
-			} catch(Exception e) {
-				System.out.println("Arquivo nao encontrado");
-			}
-			EstrategiaCopia estrategiaCopia = new CopiaArquivo(origem);
+
+			EstrategiaCopia estrategiaCopia = new CopiaArquivo(new FileInputStream(origem));
 			
 			if (parametros.contains("-comprimido")) {
 				estrategiaCopia = new Descompactador(estrategiaCopia);

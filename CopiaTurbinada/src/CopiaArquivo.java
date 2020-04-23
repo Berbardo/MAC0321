@@ -1,13 +1,13 @@
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class CopiaArquivo implements EstrategiaCopia {
-	private String origem = "";
-	private String extensao = ".txt";
+	private InputStream input = null;
 	
-	CopiaArquivo(String origem) {
-		this.origem = origem;
+	CopiaArquivo(InputStream input) {
+		this.input = input;
 	}
 	
 	@Override
@@ -18,7 +18,7 @@ public class CopiaArquivo implements EstrategiaCopia {
 			BufferedInputStream input = null;
 			
 			try {
-				input = new BufferedInputStream(new FileInputStream(origem + extensao));
+				input = new BufferedInputStream(this.input);
 				
 				while(input.available() > 0){             	
 		              copia += (char) input.read();
@@ -38,8 +38,12 @@ public class CopiaArquivo implements EstrategiaCopia {
 	}
 
 	@Override
-	public String recebeOrigem() {
-		return this.origem;
+	public InputStream recebeInput() {
+		return this.input;
+	}
+	
+	public void defineInput(InputStream input) {
+		this.input = input;
 	}
 
 }

@@ -1,7 +1,10 @@
+import java.io.InputStream;
 
 public interface EstrategiaCopia {
 
 	String copia();
 	
-	String recebeOrigem();
+	InputStream recebeInput();
+	
+	void defineInput(InputStream input);
 }
