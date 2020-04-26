@@ -1,5 +1,4 @@
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -30,7 +29,7 @@ public class CopiaArquivo implements EstrategiaCopia {
 				}
 			}
 		} catch(IOException e) {
-			// TODO
+			System.out.println("Arquivo nao encontrado");
 			System.out.println(e);
 		}
 

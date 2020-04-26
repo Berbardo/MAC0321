@@ -19,8 +19,8 @@ public class Decodificador extends CopiaDecorador {
 			SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndTripleDES");
 			this.senha = secretKeyFactory.generateSecret(pbeKeySpec);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Erro na criacao da senha");
+			System.out.println(e);
 		}
 	}
 
@@ -41,8 +41,8 @@ public class Decodificador extends CopiaDecorador {
 			byte[] cipherText = cipher.doFinal(bytes);
 			descriptografado = new String(cipherText, "UTF8");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Erro na decodificacao do arquivo");
+			System.out.println(e);
 		}
 		return descriptografado;
 	}

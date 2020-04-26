@@ -4,9 +4,6 @@ import java.io.FileOutputStream;
 
 public class CopiaTurbinada {
 	public static void main(String[] args) {
-		String origem = "resources/origem.txt";
-		String destino = "resources/destino.txt";
-		
 		EstrategiaCopia estrategiaCopia = defineOrigem(args);
 		EstrategiaCola estrategiaCola = defineDestino(args);
 		
@@ -89,8 +86,7 @@ public class CopiaTurbinada {
 		try {
 			estrategiaCola = retornaEstrategiaCola(parametros);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Destino nao encontrado");
 		}
 		
 		return estrategiaCola;
@@ -106,7 +102,6 @@ public class CopiaTurbinada {
 			EstrategiaCola estrategiaCola = new ColaArquivo(new FileOutputStream(destino));
 			
 			if (parametros.contains("-comprimido")) {
-				System.out.println("comprimido");
 				estrategiaCola = new Compactador(estrategiaCola);
 			}
 			

@@ -24,8 +24,8 @@ public class Compactador extends ColaDecorador {
 			output.closeEntry();
 			output.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Erro na compactacao do arquivo");
+			System.out.println(e);
 		}
 	}
 	
