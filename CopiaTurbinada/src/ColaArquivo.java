@@ -1,22 +1,22 @@
 import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class ColaArquivo implements EstrategiaCola {
-	private String destino = "";
+	private OutputStream output = null;
 	
-	ColaArquivo(String destino) {
-		this.destino = destino;
+	ColaArquivo(OutputStream output) {
+		this.output = new BufferedOutputStream(output);
 	}
 	
 	@Override
 	public void cola(String copia) {
 		
 		try {
-			BufferedOutputStream output = null;
+			OutputStream output = null;
 			
 			try {
-				output = new BufferedOutputStream(new FileOutputStream(destino));
+				output = this.output;
 				
 				output.write(copia.getBytes());
 			} finally {
@@ -25,10 +25,19 @@ public class ColaArquivo implements EstrategiaCola {
 				}
 			}
 		} catch (IOException e) {
-			// TODO
 			System.out.println(e);
 		}
 
+	}
+
+	@Override
+	public OutputStream recebeOutput() {
+		return this.output;
+	}
+
+	@Override
+	public void defineOutput(OutputStream output) {
+		this.output = output;	
 	}
 
 }

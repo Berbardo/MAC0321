@@ -1,5 +1,6 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class CopiaTurbinada {
 	public static void main(String[] args) {
@@ -30,8 +31,8 @@ public class CopiaTurbinada {
 		try {
 			estrategiaCopia = retornaEstrategiaCopia(parametros);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Arquivo não encontrado:");
+			System.out.println(e);
 		}
 		
 		return estrategiaCopia;
@@ -51,13 +52,14 @@ public class CopiaTurbinada {
 			}
 			
 			if (parametros.contains("-criptografado")) {
+				String senha = "123";
 				try {
 					String numeros[] = parametros.substring(parametros.indexOf("-senha")).split("\\D+");
-					int senha = Integer.parseInt(numeros[1]);					
+					senha = numeros[1];					
 				} catch(Exception e) {
 					System.out.println("Senha nao encontrada");
 				}
-//				estrategiaCopia = new Decodificador(estrategiaCopia, senha);
+				estrategiaCopia = new Decodificador(estrategiaCopia, senha);
 			}
 			
 			return estrategiaCopia;
@@ -69,7 +71,7 @@ public class CopiaTurbinada {
 	}
 
 	private static EstrategiaCola defineDestino(String[] args) {
-		EstrategiaCola estrategiaCola;
+		EstrategiaCola estrategiaCola = null;
 		String parametros = "";
 		boolean flag = false;
 		
@@ -84,37 +86,39 @@ public class CopiaTurbinada {
 			}			
 		}
 		
-		estrategiaCola = retornaEstrategiaCola(parametros);
+		try {
+			estrategiaCola = retornaEstrategiaCola(parametros);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return estrategiaCola;
 	}
 	
-	private static EstrategiaCola retornaEstrategiaCola(String parametros) {
+	private static EstrategiaCola retornaEstrategiaCola(String parametros) throws FileNotFoundException {
 		if (parametros.contains("-arquivo")) {
 			parametros.replace("-arquivo ", "");
 			
 			String[] args = parametros.split(" ");
 			String destino = args[args.length -1];
-			try {
-				destino = destino.substring(0, destino.indexOf('.'));				
-			} catch(Exception e) {
-				System.out.println("Arquivo nao encontrado");
-			}
-			EstrategiaCola estrategiaCola = new ColaArquivo(destino);
+
+			EstrategiaCola estrategiaCola = new ColaArquivo(new FileOutputStream(destino));
 			
 			if (parametros.contains("-comprimido")) {
 				System.out.println("comprimido");
-	//			estrategiaCola = new Compressor(estrategiaCola);
+				estrategiaCola = new Compactador(estrategiaCola);
 			}
 			
 			if (parametros.contains("-criptografado")) {
+				String senha = "123";
 				try {
 					String numeros[] = parametros.substring(parametros.indexOf("-senha")).split("\\D+");
-					int senha = Integer.parseInt(numeros[1]);		
+					senha = numeros[1];
 				} catch(Exception e) {
 					System.out.println("Senha nao encontrada");
 				}
-	//			estrategiaCola = new Codificador(estrategiaCola, senha);
+				estrategiaCola = new Codificador(estrategiaCola, senha);
 			}
 			
 			return estrategiaCola;
