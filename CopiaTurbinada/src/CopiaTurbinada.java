@@ -62,6 +62,9 @@ public class CopiaTurbinada {
 			return estrategiaCopia;
 		} else if (parametros.contains("-teclado")) {
 			return new CopiaTeclado();
+		} else if (parametros.contains("-rede")) {
+			System.out.println("Estabelecendo conexao...");
+			return new CopiaRede(4242);
 		} else {
 			return null;
 		}
@@ -119,6 +122,9 @@ public class CopiaTurbinada {
 			return estrategiaCola;
 		} else if (parametros.contains("-tela")) {
 			return new ColaTela();
+		} else if (parametros.contains("-rede")) {
+			System.out.println("Estabelecendo conexao...");
+			return new ColaRede("127.0.0.1", 4242);
 		} else {
 			return null;
 		}
